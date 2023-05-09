@@ -74,12 +74,15 @@ body {
   background-image: linear-gradient(to right, #4c65a0, #304577);
   border-radius: 4px;
   border: 1px solid #354971;
-  color: #fff;
   font-size: 40px;
   font-weight: 700;
   padding: 16px 0;
+  text-align: center;
   box-sizing: border-box;
   position: relative;
+}
+.time::placeholder {
+  color: #fff;
 }
 .time.dot::after {
   background-image: url(imgs/dot.png);
