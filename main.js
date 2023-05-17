@@ -41,4 +41,15 @@ function displayTime() {
   inputSec !== 0 ? (sec.textContent = inputSec) : (sec.textContent = '00');
 }
 
+// reset버튼 눌렀을 때
+function clickResetBtn() {
+  resetBtn.addEventListener('click', (e) => {
+    inputHrs = 0;
+    inputMin = 0;
+    inputSec = 0;
+    displayTime();
+  });
+}
+
 setTime();
+clickResetBtn();
