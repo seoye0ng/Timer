@@ -11,6 +11,7 @@ let isTimeInput = false;
 let inputHrs = 0;
 let inputMin = 0;
 let inputSec = 0;
+let interval;
 
 // 1. 시간/분/초를 입력했을 때
 function setTime() {
@@ -36,12 +37,69 @@ function setTime() {
 
 // 디스플레이에 보여주는 함수
 function displayTime() {
-  inputHrs !== 0 ? (hrs.textContent = inputHrs) : (hrs.textContent = '00');
-  inputMin !== 0 ? (min.textContent = inputMin) : (min.textContent = '00');
-  inputSec !== 0 ? (sec.textContent = inputSec) : (sec.textContent = '00');
+  inputHrs !== 0
+    ? inputHrs > '9'
+      ? (hrs.textContent = inputHrs)
+      : (hrs.textContent = `0${inputHrs}`)
+    : (hrs.textContent = '00');
+  inputMin !== 0
+    ? inputMin > '9'
+      ? (min.textContent = inputMin)
+      : (min.textContent = `0${inputHrs}`)
+    : (min.textContent = '00');
+  inputSec !== 0
+    ? inputSec > '9'
+      ? (sec.textContent = inputSec)
+      : (sec.textContent = `0${inputSec}`)
+    : (sec.textContent = '00');
 }
 
-// reset버튼 눌렀을 때
+// 2.3. start 버튼 & pause 버튼을 눌렀을 때
+function clickBtn() {
+  startBtn.addEventListener('click', (e) => {
+    if (isTimeInput) {
+      e.target.classList.toggle('pause-btn');
+      if (e.target.textContent !== 'PAUSE') {
+        e.target.textContent = 'PAUSE';
+        // 1초씩 감소하는 함수
+        startTimer();
+      } else {
+        e.target.textContent = 'START';
+        // 시간을 멈추는 함수
+        stopTimer();
+        // clearInterval(startTimer);
+      }
+    }
+  });
+}
+
+// setInterval() 변수에 담아야 clearInterval()로 중지할 수 있음
+function startTimer() {
+  interval = setInterval(() => {
+    if (inputHrs === 0 && inputMin === 0 && inputSec === 0) {
+      stopTimer();
+      alert('TIME OVER');
+    } else if (inputSec !== 0) {
+      inputSec--;
+    } else {
+      inputSec = 59;
+      if (inputMin !== 0) {
+        inputMin--;
+      } else {
+        inputMin = 59;
+        inputHrs !== 0 ? inputHrs-- : (inputHrs = 23);
+      }
+    }
+
+    displayTime();
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(interval);
+}
+
+// 6. reset버튼 눌렀을 때
 function clickResetBtn() {
   resetBtn.addEventListener('click', (e) => {
     inputHrs = 0;
@@ -52,4 +110,5 @@ function clickResetBtn() {
 }
 
 setTime();
+clickBtn();
 clickResetBtn();
