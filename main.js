@@ -1,6 +1,5 @@
 const startBtn = document.querySelector('.start-btn');
 const resetBtn = document.querySelector('.reset-btn');
-
 const hrs = document.querySelector('.hrs');
 const min = document.querySelector('.min');
 const sec = document.querySelector('.sec');
@@ -45,7 +44,7 @@ function displayTime() {
   inputMin !== 0
     ? inputMin > '9'
       ? (min.textContent = inputMin)
-      : (min.textContent = `0${inputHrs}`)
+      : (min.textContent = `0${inputMin}`)
     : (min.textContent = '00');
   inputSec !== 0
     ? inputSec > '9'
@@ -78,6 +77,7 @@ function startTimer() {
   interval = setInterval(() => {
     if (inputHrs === 0 && inputMin === 0 && inputSec === 0) {
       stopTimer();
+      changeStart();
       alert('TIME OVER');
     } else if (inputSec !== 0) {
       inputSec--;
@@ -106,7 +106,15 @@ function clickResetBtn() {
     inputMin = 0;
     inputSec = 0;
     displayTime();
+    changeStart();
   });
+}
+
+function changeStart() {
+  if (startBtn.textContent === 'PAUSE') {
+    startBtn.classList.remove('pause-btn');
+    startBtn.textContent = 'START';
+  }
 }
 
 setTime();
